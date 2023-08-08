@@ -8,5 +8,5 @@ interface UserRepository
 {
     public function createUser(User $user): bool;
 
-    public function bringUser(string $email): User;
+    public function bringUser(string $email, string $password): User;
 }
