@@ -9,27 +9,19 @@ class User
 {
     public readonly int $id;
     public readonly string $email;
-    private readonly string $password;
-    public readonly string $passwordHash;
+    public readonly string $password;
 
     /**
      * @param string $email
      * @param string $password
-     * @param string|null $passwordHash
      */
-    public function __construct(string $email, string $password, string $passwordHash = null)
+    public function __construct(string $email, string $password)
     {
         $this->filterEmail($email);
         $this->filterPassword($password);
 
         $this->email = $email;
         $this->password = $password;
-
-        if (is_null($passwordHash)) {
-            $this->passwordHash = password_hash($this->password, PASSWORD_ARGON2ID);
-        } else {
-            $this->passwordHash = $passwordHash;
-        }
     }
 
     private function filterEmail(string $email): void
@@ -53,10 +45,5 @@ class User
     public function setId(int $id): void
     {
         $this->id = $id;
-    }
-
-    public function validatePassword(): bool
-    {
-        return password_verify($this->password, $this->passwordHash);
     }
 }
