@@ -10,7 +10,7 @@ class User
     public readonly int $id;
     public readonly string $email;
     private readonly string $password;
-    private readonly string $passwordHash;
+    public readonly string $passwordHash;
 
     /**
      * @param string $email
