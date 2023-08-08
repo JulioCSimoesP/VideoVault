@@ -7,14 +7,8 @@ use juliocsimoesp\PHPMVC1\Model\Domain\Entity\Video;
 use juliocsimoesp\PHPMVC1\Model\Domain\Repository\VideoRepository;
 use PDO;
 
-class PdoVideoRepository implements VideoRepository
+class PdoVideoRepository extends PdoRepository implements VideoRepository
 {
-    private PDO $pdo;
-
-    public function __construct(PDO $pdo)
-    {
-        $this->pdo = $pdo;
-    }
 
     public function addVideo(Video $video): bool
     {
