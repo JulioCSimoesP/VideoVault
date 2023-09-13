@@ -2,11 +2,17 @@
 
 namespace juliocsimoesp\PHPMVC1\Controller;
 
+use juliocsimoesp\PHPMVC1\Model\Infrastructure\Service\RedirectionManager;
+
 class LoginFormController extends Controller implements RequestController
 {
 
     public function processRequest(): void
     {
-        // TODO: Implement processRequest() method.
+        if ($_SESSION['logado'] ?? false) {
+            RedirectionManager::redirect();
+        }
+
+        require_once __DIR__ . '/../View/login-form.php';
     }
 }

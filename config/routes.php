@@ -7,5 +7,6 @@ return [
     'GET|/novo-video' => \juliocsimoesp\PHPMVC1\Controller\VideoFormController::class,
     'POST|/novo-video' => \juliocsimoesp\PHPMVC1\Controller\NewVideoController::class,
     'GET|/login' => \juliocsimoesp\PHPMVC1\Controller\LoginFormController::class,
-    'POST|/login' => \juliocsimoesp\PHPMVC1\Controller\LoginController::class
+    'POST|/login' => \juliocsimoesp\PHPMVC1\Controller\LoginController::class,
+    'GET|/logout' => \juliocsimoesp\PHPMVC1\Controller\LogoutController::class
 ];
