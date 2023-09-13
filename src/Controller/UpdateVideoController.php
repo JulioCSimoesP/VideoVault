@@ -24,6 +24,10 @@ class UpdateVideoController extends Controller implements RequestController
             );
             $video->setId($_GET['id']);
 
+            if ($_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+                $video->setImagePath($_FILES['imagem']['tmp_name']);
+            }
+
             if ($this->videoRepository->updateVideo($video)) {
                 RedirectionManager::redirect(RedirectionManager::DEFAULT_DESTINATION, ['sucesso' => 1]);
             } else {

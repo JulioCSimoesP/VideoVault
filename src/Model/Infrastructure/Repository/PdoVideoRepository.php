@@ -14,10 +14,11 @@ class PdoVideoRepository extends PdoRepository implements VideoRepository
     {
         $this->verifyDuplicate($video);
 
-        $insertQuery = "INSERT INTO videos (url, title) VALUES (:url, :title);";
+        $insertQuery = "INSERT INTO videos (url, title, image_path) VALUES (:url, :title, :image_path);";
         $statement = $this->pdo->prepare($insertQuery);
         $statement->bindValue(':url', $video->url);
         $statement->bindValue(':title', $video->title);
+        $statement->bindValue(':image_path', $video->imagePath ?? null);
         $result = $statement->execute();
 
         $video->setId($this->pdo->lastInsertId());
@@ -40,10 +41,11 @@ class PdoVideoRepository extends PdoRepository implements VideoRepository
     {
         $this->verifyId($video->id);
 
-        $updateQuery = "UPDATE videos SET url = :url, title = :title WHERE id = :id;";
+        $updateQuery = "UPDATE videos SET url = :url, title = :title, image_path = :image_path WHERE id = :id;";
         $statement = $this->pdo->prepare($updateQuery);
         $statement->bindValue(':url', $video->url);
         $statement->bindValue(':title', $video->title);
+        $statement->bindValue(':image_path', $video->imagePath);
         $statement->bindValue(':id', $video->id, PDO::PARAM_INT);
 
         return $statement->execute();

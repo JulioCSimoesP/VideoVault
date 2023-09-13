@@ -23,6 +23,10 @@ class NewVideoController extends Controller implements RequestController
                 $_POST['titulo']
             );
 
+            if ($_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+                $video->setImagePath($_FILES['imagem']['tmp_name']);
+            }
+
             if ($this->videoRepository->addVideo($video)) {
                 RedirectionManager::redirect(RedirectionManager::DEFAULT_DESTINATION, ['sucesso' => 1]);
             } else {
