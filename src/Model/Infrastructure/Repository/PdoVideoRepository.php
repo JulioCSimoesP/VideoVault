@@ -26,7 +26,7 @@ class PdoVideoRepository extends PdoRepository implements VideoRepository
         return $result;
     }
 
-    public function removeVideo(int $id): bool
+    public function deleteVideo(int $id): bool
     {
         $this->verifyId($id);
 
@@ -37,7 +37,18 @@ class PdoVideoRepository extends PdoRepository implements VideoRepository
         return $statement->execute();
     }
 
-    public function updateVideo(Video $video): bool
+    public function removeCover(int $id): bool
+    {
+        $this->verifyId($id);
+
+        $updateQuery = "UPDATE videos SET image_path = NULL WHERE id = ?;";
+        $statement = $this->pdo->prepare($updateQuery);
+        $statement->bindValue(1, $id);
+
+        return $statement->execute();
+    }
+
+    public function updateVideoAll(Video $video): bool
     {
         $this->verifyId($video->id);
 
@@ -46,6 +57,19 @@ class PdoVideoRepository extends PdoRepository implements VideoRepository
         $statement->bindValue(':url', $video->url);
         $statement->bindValue(':title', $video->title);
         $statement->bindValue(':image_path', $video->imagePath);
+        $statement->bindValue(':id', $video->id, PDO::PARAM_INT);
+
+        return $statement->execute();
+    }
+
+    public function updateVideoStandard(Video $video): bool
+    {
+        $this->verifyId($video->id);
+
+        $updateQuery = "UPDATE videos SET url = :url, title = :title WHERE id = :id;";
+        $statement = $this->pdo->prepare($updateQuery);
+        $statement->bindValue(':url', $video->url);
+        $statement->bindValue(':title', $video->title);
         $statement->bindValue(':id', $video->id, PDO::PARAM_INT);
 
         return $statement->execute();
@@ -114,6 +138,9 @@ class PdoVideoRepository extends PdoRepository implements VideoRepository
                 $videoData['title']
             );
             $video->setId($videoData['id']);
+            if(!is_null($videoData['image_path'])) {
+                $video->setImagePath($videoData['image_path']);
+            }
 
             return $video;
     }

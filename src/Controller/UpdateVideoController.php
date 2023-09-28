@@ -6,6 +6,7 @@ use DomainException;
 use InvalidArgumentException;
 use juliocsimoesp\PHPMVC1\Model\Domain\Entity\Video;
 use juliocsimoesp\PHPMVC1\Model\Infrastructure\Service\RedirectionManager;
+use juliocsimoesp\PHPMVC1\Model\Infrastructure\Service\UploadManager;
 
 class UpdateVideoController extends Controller implements RequestController
 {
@@ -25,10 +26,14 @@ class UpdateVideoController extends Controller implements RequestController
             $video->setId($_GET['id']);
 
             if ($_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-                $video->setImagePath($_FILES['imagem']['tmp_name']);
+                $generatedPath = UploadManager::processImageUpload();
+                $video->setImagePath($generatedPath);
+                $operationSuccess = $this->videoRepository->updateVideoAll($video);
+            } else {
+                $operationSuccess = $this->videoRepository->updateVideoStandard($video);
             }
 
-            if ($this->videoRepository->updateVideo($video)) {
+            if ($operationSuccess) {
                 RedirectionManager::redirect(RedirectionManager::DEFAULT_DESTINATION, ['sucesso' => 1]);
             } else {
                 RedirectionManager::redirect(RedirectionManager::DEFAULT_DESTINATION, ['sucesso' => 0]);

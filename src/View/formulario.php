@@ -21,7 +21,7 @@ require_once __DIR__ . '/inicio-html.php';
         <div class="formulario__campo">
             <label class="campo__etiqueta" for="imagem">Imagem do vídeo</label>
             <input name="imagem" class="campo__escrita" type="file"
-                   id='imagem'/>
+                   id='imagem' accept="image/*"/>
         </div>
 
         <input class="formulario__botao" type="submit" value="Enviar"/>

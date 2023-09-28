@@ -8,9 +8,9 @@ interface VideoRepository
 {
     public function addVideo(Video $video):bool;
 
-    public function removeVideo(int $id):bool;
+    public function deleteVideo(int $id):bool;
 
-    public function updateVideo(Video $video):bool;
+    public function updateVideoAll(Video $video):bool;
 
     /**
      * @return Video[]

@@ -6,16 +6,25 @@ require_once __DIR__ . '/inicio-html.php';
 <ul class="videos__container" alt="videos alura">
     <?php foreach ($videoList as $video): ?>
         <li class="videos__item">
+            <?php if (isset($video->imagePath)): ?>
+            <a href="<?= $video->url ?>">
+                <img src="/img/uploads/<?= $video->imagePath ?>" alt="<?= $video->imagePath ?>" style="width: 100%">
+            </a>
+            <?php else: ?>
             <iframe width="100%" height="72%" src="<?= $video->url ?>"
                     title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
+                    allowfullscreen id="videoFrame"></iframe>
+            <?php endif; ?>
             <div class="descricao-video">
                 <img src="img/logo.png" alt="logo canal alura">
                 <h3><?= $video->title ?></h3>
                 <div class="acoes-video">
                     <a href="./editar-video?id=<?= $video->id ?>">Editar</a>
-                    <a href="./remover-video?id=<?= $video->id ?>">Excluir</a>
+                    <?php if (isset($video->imagePath)): ?>
+                    <a href="./remover-capa?id=<?= $video->id ?>">Remover capa</a>
+                    <?php endif; ?>
+                    <a href="./deletar-video?id=<?= $video->id ?>">Excluir</a>
                 </div>
             </div>
         </li>
