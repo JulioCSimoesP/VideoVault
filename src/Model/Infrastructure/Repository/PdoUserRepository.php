@@ -18,7 +18,7 @@ class PdoUserRepository extends PdoRepository implements UserRepository
         $insertQuery = 'INSERT INTO users (email, password) VALUES (:email, :password);';
         $statement = $this->pdo->prepare($insertQuery);
         $statement->bindValue(':email', $user->email);
-        $statement->bindValue(':password', $user->password);
+        $statement->bindValue(':password', password_hash($user->password, PASSWORD_ARGON2ID));
         $result =  $statement->execute();
 
         $user->setId($this->pdo->lastInsertId());
@@ -41,7 +41,17 @@ class PdoUserRepository extends PdoRepository implements UserRepository
         return $this->hydrateUser($queryResult);
     }
 
-    private function verifyClone(User $user)
+    public function updateUserPassword(User $user): bool
+    {
+        $updateQuery = 'UPDATE users SET password = :password WHERE id = :id;';
+        $statement = $this->pdo->prepare($updateQuery);
+        $statement->bindValue(':password', password_hash($user->password, PASSWORD_ARGON2ID));
+        $statement->bindValue(':id', $user->id, PDO::PARAM_INT);
+
+        return $statement->execute();
+    }
+
+    private function verifyClone(User $user): void
     {
         $readQuery = 'SELECT * FROM users WHERE email = :email;';
         $statement = $this->pdo->prepare($readQuery);
