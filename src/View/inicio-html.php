@@ -1,3 +1,13 @@
+<?php
+if ($_SESSION['logado'] ?? false) {
+    $loginState['logButtonRoute'] = './logout';
+    $loginState['logButtonText'] = 'Sair';
+} else {
+    $loginState['logButtonRoute'] = './login';
+    $loginState['logButtonText'] = 'Fazer login';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -23,7 +33,9 @@
 
         <div class="cabecalho__icones">
             <a href="./novo-video" class="cabecalho__videos"></a>
-            <a href="<?php if (array_key_exists('logado', $_SESSION)) {echo './logout';} else {echo './login';} ?>" class="cabecalho__sair">Sair</a>
+            <a href="<?= $loginState['logButtonRoute'] ?>" class="cabecalho__sair">
+                <?= $loginState['logButtonText'] ?>
+            </a>
         </div>
     </nav>
 
