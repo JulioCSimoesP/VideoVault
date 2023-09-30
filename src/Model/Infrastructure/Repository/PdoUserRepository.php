@@ -5,7 +5,6 @@ namespace juliocsimoesp\PHPMVC1\Model\Infrastructure\Repository;
 use DomainException;
 use juliocsimoesp\PHPMVC1\Model\Domain\Entity\User;
 use juliocsimoesp\PHPMVC1\Model\Domain\Repository\UserRepository;
-use juliocsimoesp\PHPMVC1\Model\Infrastructure\Service\RedirectionManager;
 use PDO;
 
 class PdoUserRepository extends PdoRepository implements UserRepository
@@ -26,17 +25,13 @@ class PdoUserRepository extends PdoRepository implements UserRepository
         return $result;
     }
 
-    public function userByEmail(string $email): User
+    public function userByEmail(string $email): User|null
     {
         $readQuery = 'SELECT * FROM users WHERE email = :email;';
         $statement = $this->pdo->prepare($readQuery);
         $statement->bindValue(':email', $email);
         $statement->execute();
         $queryResult = $statement->fetch();
-
-        if ($queryResult === false) {
-            throw new DomainException('Email informado não existe.');
-        }
 
         return $this->hydrateUser($queryResult);
     }
@@ -63,14 +58,14 @@ class PdoUserRepository extends PdoRepository implements UserRepository
         }
     }
 
-    private function hydrateUser(array $queryResult): User
+    private function hydrateUser(array|false $queryResult): User|null
     {
         $user = new User(
-            $queryResult['email'],
-            $queryResult['password']
+            $queryResult['email'] ?? 'email@email.com',
+            $queryResult['password'] ?? 'passwordpassword'
         );
-        $user->setId($queryResult['id']);
+        $user->setId($queryResult['id'] ?? '123');
 
-        return $user;
+        return $queryResult ? $user : null;
     }
 }

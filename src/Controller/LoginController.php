@@ -5,6 +5,7 @@ namespace juliocsimoesp\PHPMVC1\Controller;
 use DomainException;
 use InvalidArgumentException;
 use juliocsimoesp\PHPMVC1\Model\Domain\Entity\User;
+use juliocsimoesp\PHPMVC1\Model\Infrastructure\Service\Authenticator;
 use juliocsimoesp\PHPMVC1\Model\Infrastructure\Service\RedirectionManager;
 
 class LoginController extends Controller implements RequestController
@@ -19,12 +20,13 @@ class LoginController extends Controller implements RequestController
         try {
 
             $user = $this->userRepository->userByEmail($_POST['email']);
-            $correctPassword = password_verify($_POST['senha'], $user->password ?? '');
+            $correctPassword = Authenticator::Authenticate($user, $_POST['senha']);
 
             if (!$correctPassword) {
                 RedirectionManager::redirect('login', ['erro' => 1]);
             }
 
+            //Trocar por um redirecionamento para controlador de atualização de usuário
             if (password_needs_rehash($user->password, PASSWORD_ARGON2ID) && $correctPassword) {
                 $updatedUser = new User($_POST['email'], $_POST['senha']);
                 $updatedUser->setId($user->id);
