@@ -56,7 +56,7 @@ class PdoVideoRepository extends PdoRepository implements VideoRepository
         $statement = $this->pdo->prepare($updateQuery);
         $statement->bindValue(':url', $video->url);
         $statement->bindValue(':title', $video->title);
-        $statement->bindValue(':image_path', $video->imagePath);
+        $statement->bindValue(':image_path', $video->imagePath ?? null);
         $statement->bindValue(':id', $video->id, PDO::PARAM_INT);
 
         return $statement->execute();

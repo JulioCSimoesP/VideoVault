@@ -44,7 +44,8 @@ class SessionManager
     private static function initializeSettings(): void
     {
         session_save_path(__DIR__ . '/../../../../session_info/');
-        ini_set('session.gc_probability', 100);
+        ini_set('session.gc_probability', 1000);
+        ini_set('session.gc_maxlifetime', 600);
         session_set_cookie_params([
             'secure' => true,
             'httponly' => true,

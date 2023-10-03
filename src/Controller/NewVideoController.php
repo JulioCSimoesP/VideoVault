@@ -24,11 +24,7 @@ class NewVideoController extends Controller implements RequestController
                 $_POST['titulo']
             );
 
-            if ($_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-                $generatedPath = UploadManager::processImageUpload();
-                $video->setImagePath($generatedPath);
-            }
-
+            UploadManager::processImageUpload($video);
             $operationSuccess = $this->videoRepository->addVideo($video);
 
             if ($operationSuccess) {
