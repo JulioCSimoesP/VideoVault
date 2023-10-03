@@ -17,6 +17,8 @@ class RemoveCoverController extends Controller implements RequestController
 
         try {
 
+            $video = $this->videoRepository->videoById($_GET['id']);
+            unlink(__DIR__ . '/../../public/img/uploads/' . $video->imagePath);
             $operationSuccess = $this->videoRepository->removeCover($_GET['id']);
 
             if ($operationSuccess) {
