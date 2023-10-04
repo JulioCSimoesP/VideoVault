@@ -7,8 +7,8 @@ class StringManipulator
 
     public static function slugfyFileName(string $fullString, $options = array()): string
     {
-        $stringSufix = mb_substr($fullString, mb_strpos($fullString, '.'));
-        $stringBody = mb_substr($fullString, 0, mb_strpos($fullString, '.'));
+        $stringSufix = mb_substr($fullString, mb_strrpos($fullString, '.'));
+        $stringBody = mb_substr($fullString, 0, mb_strrpos($fullString, '.'));
         $stringBody = mb_convert_encoding($stringBody, 'UTF-8', mb_list_encodings());
 
         $defaults = array(
@@ -88,7 +88,6 @@ class StringManipulator
             'š' => 's', 'ū' => 'u', 'ž' => 'z'
         );
 
-        // Make custom replacements
         $stringBody = preg_replace(array_keys($options['replacements']), $options['replacements'], $stringBody);
 
         if ($options['transliterate']) {
