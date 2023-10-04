@@ -29,7 +29,6 @@ class UploadManager
 
     private static function generatePath(): string|null
     {
-        $safeImageName = uniqid('upload_') . '_' . pathinfo($_FILES['imagem']['name'], PATHINFO_BASENAME);
         $finfo = new finfo(FILEINFO_MIME_TYPE);
         $mimeType = $finfo->file($_FILES['imagem']['tmp_name']);
 
@@ -37,6 +36,8 @@ class UploadManager
             return null;
         }
 
-        return $safeImageName;
+        $safeFileName = pathinfo($_FILES['imagem']['name'], PATHINFO_BASENAME);
+
+        return uniqid('upload_') . '_' . StringManipulator::slugfyFileName($safeFileName);
     }
 }
