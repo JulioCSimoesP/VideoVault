@@ -20,7 +20,7 @@ class VideoFormController extends Controller implements RequestController
 
             } catch (InvalidArgumentException | DomainException $exception) {
 
-                RedirectionManager::redirect(RedirectionManager::DEFAULT_DESTINATION, ['erro' => 1]);
+                RedirectionManager::redirect(responseCode: 400);
 
             }
         }

@@ -3,6 +3,7 @@
 namespace juliocsimoesp\PHPMVC1\Controller;
 
 use DomainException;
+use http\Params;
 use InvalidArgumentException;
 use juliocsimoesp\PHPMVC1\Model\Domain\Entity\Video;
 use juliocsimoesp\PHPMVC1\Model\Infrastructure\Service\RedirectionManager;
@@ -14,7 +15,7 @@ class UpdateVideoController extends Controller implements RequestController
     public function processRequest(): void
     {
         if (!isset($_GET['id']) || !isset($_POST['url']) || !isset($_POST['titulo'])) {
-            RedirectionManager::redirect();
+            RedirectionManager::redirect(responseCode: 400);
         }
 
         try {
@@ -26,19 +27,19 @@ class UpdateVideoController extends Controller implements RequestController
             $video->setId($_GET['id']);
 
             UploadManager::processImageUpload($video);
-            $operationSuccess = $_FILES['imagem']['error'] === UPLOAD_ERR_OK ?
+            $operationSuccess = ($_FILES['imagem']['error'] === UPLOAD_ERR_OK) ?
                 $this->videoRepository->updateVideoAll($video) :
                 $this->videoRepository->updateVideoStandard($video);
 
             if ($operationSuccess) {
-                RedirectionManager::redirect(RedirectionManager::DEFAULT_DESTINATION, ['sucesso' => 1]);
+                RedirectionManager::redirect(responseCode: 303, params: ['sucesso' => 1]);
             } else {
-                RedirectionManager::redirect(RedirectionManager::DEFAULT_DESTINATION, ['sucesso' => 0]);
+                RedirectionManager::redirect(responseCode: 500);
             }
 
         } catch (InvalidArgumentException | DomainException $exception) {
 
-            RedirectionManager::redirect(RedirectionManager::DEFAULT_DESTINATION, ['erro' => 1]);
+            RedirectionManager::redirect(responseCode: 303, params: ['erro' => 1]);
 
         }
     }

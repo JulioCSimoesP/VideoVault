@@ -10,7 +10,7 @@ class LoginFormController extends Controller implements RequestController
     public function processRequest(): void
     {
         if ($_SESSION['logado'] ?? false) {
-            RedirectionManager::redirect();
+            RedirectionManager::redirect(responseCode: 303);
         }
 
         require_once __DIR__ . '/../View/login-form.php';

@@ -10,6 +10,6 @@ class LogoutController extends Controller implements RequestController
     public function processRequest(): void
     {
         unset($_SESSION['logado']);
-        RedirectionManager::redirect('login');
+        RedirectionManager::redirect('login', 303);
     }
 }

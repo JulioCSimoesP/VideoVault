@@ -64,7 +64,7 @@ class RedirectionManager
      * </p>
      * @return void
      */
-    #[NoReturn] public static function redirect(string $destination = self::DEFAULT_DESTINATION, array $params = null): void
+    #[NoReturn] public static function redirect(string $destination = self::DEFAULT_DESTINATION, int $responseCode = 200, array $params = null): void
     {
         self::initRedirectionManager();
         self::setDestination($destination);
@@ -74,7 +74,7 @@ class RedirectionManager
             self::formatQueryParams();
         }
 
-        header('Location: http://' . self::$host . self::$uri . '/' . self::$destination . self::$formattedQueryParams, true, 303);
+        header('Location: http://' . self::$host . self::$uri . '/' . self::$destination . self::$formattedQueryParams, true, $responseCode);
         exit();
     }
 }

@@ -27,7 +27,7 @@ $routes = require_once __DIR__ . './../config/routes.php';
 $logged = $_SESSION['logado'] ?? false;
 
 if (!$logged && $requestPath !== '/login') {
-    RedirectionManager::redirect('login', ['erro' => 4]);
+    RedirectionManager::redirect('login', 303, ['erro' => 2]);
 }
 
 $controllerClass = $routes["$requestMethod|$requestPath"] ?? Error404Controller::class;

@@ -14,7 +14,7 @@ class NewVideoController extends Controller implements RequestController
     public function processRequest(): void
     {
         if (!isset($_POST['url']) || !isset($_POST['titulo'])) {
-            RedirectionManager::redirect();
+            RedirectionManager::redirect(responseCode: 400);
         }
 
         try {
@@ -28,14 +28,14 @@ class NewVideoController extends Controller implements RequestController
             $operationSuccess = $this->videoRepository->addVideo($video);
 
             if ($operationSuccess) {
-                RedirectionManager::redirect(RedirectionManager::DEFAULT_DESTINATION, ['sucesso' => 1]);
+                RedirectionManager::redirect(responseCode: 303, params: ['sucesso' => 1]);
             } else {
-                RedirectionManager::redirect(RedirectionManager::DEFAULT_DESTINATION, ['sucesso' => 0]);
+                RedirectionManager::redirect(responseCode: 500);
             }
 
         } catch (InvalidArgumentException | DomainException $exception) {
 
-            RedirectionManager::redirect(RedirectionManager::DEFAULT_DESTINATION, ['erro' => 1]);
+            RedirectionManager::redirect(responseCode: 303, params: ['erro' => 1]);
 
         }
     }

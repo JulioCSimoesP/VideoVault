@@ -14,7 +14,7 @@ class LoginController extends Controller implements RequestController
     public function processRequest(): void
     {
         if (!isset($_POST['email']) || !isset($_POST['senha'])) {
-            RedirectionManager::redirect();
+            RedirectionManager::redirect(responseCode: 400);
         }
 
         try {
@@ -23,7 +23,7 @@ class LoginController extends Controller implements RequestController
             $correctPassword = Authenticator::Authenticate($user, $_POST['senha']);
 
             if (!$correctPassword) {
-                RedirectionManager::redirect('login', ['erro' => 1]);
+                RedirectionManager::redirect('login', 303, ['erro' => 1]);
             }
 
             //Trocar por um redirecionamento para controlador de atualização de usuário
@@ -34,11 +34,11 @@ class LoginController extends Controller implements RequestController
             }
 
             $_SESSION['logado'] = true;
-            RedirectionManager::redirect();
+            RedirectionManager::redirect(responseCode: 303);
 
         } catch (InvalidArgumentException | DomainException $exception) {
 
-            RedirectionManager::redirect('login', ['erro' => 1]);
+            RedirectionManager::redirect(responseCode: 303, params: ['erro' => 1]);
 
         }
     }
