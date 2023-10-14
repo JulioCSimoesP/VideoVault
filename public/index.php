@@ -26,7 +26,7 @@ $requestMethod = $_SERVER['REQUEST_METHOD'];
 $routes = require_once __DIR__ . './../config/routes.php';
 $logged = $_SESSION['logado'] ?? false;
 
-if (!$logged && $requestPath !== '/login') {
+if (!$logged && $requestPath !== '/login' && !str_starts_with($requestPath, '/api')) {
     RedirectionManager::redirect('login', 303, ['erro' => 2]);
 }
 

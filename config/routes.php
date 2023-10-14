@@ -9,5 +9,6 @@ return [
     'GET|/login' => \juliocsimoesp\PHPMVC1\Controller\LoginFormController::class,
     'POST|/login' => \juliocsimoesp\PHPMVC1\Controller\LoginController::class,
     'GET|/logout' => \juliocsimoesp\PHPMVC1\Controller\LogoutController::class,
-    'GET|/remover-capa' => \juliocsimoesp\PHPMVC1\Controller\RemoveCoverController::class
+    'GET|/remover-capa' => \juliocsimoesp\PHPMVC1\Controller\RemoveCoverController::class,
+    'POST|/api-login' => \juliocsimoesp\PHPMVC1\Controller\APILoginController::class
 ];
