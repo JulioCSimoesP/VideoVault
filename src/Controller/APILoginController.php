@@ -17,7 +17,7 @@ class APILoginController extends Controller implements RequestController
         $correctPassword = Authenticator::Authenticate($user, $inputData['password']);
 
         if ($correctPassword) {
-            $secretKey = require_once __DIR__ . '/../../config/secret.php';
+            $secretKey = require_once __DIR__ . '/../../config/key.php';
             $JWTPayload = [
                 'iss' => 'http://localhost:8080',
                 'exp' => time() + 1400,
