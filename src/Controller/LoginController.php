@@ -20,7 +20,7 @@ class LoginController extends Controller implements RequestController
         try {
 
             $user = $this->userRepository->userByEmail($_POST['email']);
-            $correctPassword = Authenticator::Authenticate($user, $_POST['senha']);
+            $correctPassword = Authenticator::authenticate($user, $_POST['senha']);
 
             if (!$correctPassword) {
                 RedirectionManager::redirect('login', 303, ['erro' => 1]);

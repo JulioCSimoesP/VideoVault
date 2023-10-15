@@ -2,12 +2,13 @@
 
 namespace juliocsimoesp\PHPMVC1\Model\Infrastructure\Service;
 
+use Firebase\JWT\JWT;
 use juliocsimoesp\PHPMVC1\Model\Domain\Entity\User;
 
 class Authenticator
 {
 
-    public static function Authenticate(User|null $user, string $insertedPassword): bool
+    public static function authenticate(User|null $user, string $insertedPassword): bool
     {
         $storedPassword = password_hash(' ', PASSWORD_ARGON2ID);
         if ($user) {
