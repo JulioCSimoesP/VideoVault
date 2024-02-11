@@ -2,7 +2,6 @@
 
 namespace juliocsimoesp\PHPMVC1\Model\Infrastructure\Service;
 
-use Firebase\JWT\JWT;
 use juliocsimoesp\PHPMVC1\Model\Domain\Entity\User;
 
 class Authenticator

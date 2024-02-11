@@ -7,7 +7,6 @@ use Firebase\JWT\SignatureInvalidException;
 use InvalidArgumentException;
 use juliocsimoesp\PHPMVC1\Model\Domain\Entity\Video;
 use juliocsimoesp\PHPMVC1\Model\Infrastructure\Service\JWTHandler;
-use juliocsimoesp\PHPMVC1\Model\Infrastructure\Service\RedirectionManager;
 use juliocsimoesp\PHPMVC1\Model\Infrastructure\Service\UploadManager;
 use UnexpectedValueException;
 

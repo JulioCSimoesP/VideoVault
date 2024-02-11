@@ -11,9 +11,8 @@
   ],
   "require": {
     "ext-pdo": "*",
-    "ext-fileinfo": "*",
     "ext-mbstring": "*",
-    "firebase/php-jwt": "*"
+    "ext-fileinfo": "*"
   },
   "autoload": {
     "psr-4": {
